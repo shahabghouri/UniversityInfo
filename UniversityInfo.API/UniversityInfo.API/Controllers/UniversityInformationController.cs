@@ -32,10 +32,21 @@ namespace UniversityInfo.API.Controllers
             await universityInformationService.AddBatch(universityDTO);
             return Ok();
         }
-        [HttpPut]
-        public async Task<IActionResult> Edit(UniversityDTO universityDTO)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(long id,UniversityDTO universityDTO)
         {
-            var universityAfterEdit = await universityInformationService.Edit(universityDTO);
+            var universityAfterEdit = await universityInformationService.Edit(id,universityDTO);
+            return Ok(universityAfterEdit);
+        }
+        [HttpPut("EditByName")]
+        public async Task<IActionResult> EditByName(UniversityDTO universityDTO)
+        {
+            var university = await universityInformationService.GetByName(universityDTO.Name);
+            if (university == null)
+            {
+                throw new Exception("University Not Found");
+            }
+            var universityAfterEdit = await universityInformationService.Edit(university.Id,universityDTO);
             return Ok(universityAfterEdit);
         }
     }

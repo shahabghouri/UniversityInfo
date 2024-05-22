@@ -6,6 +6,7 @@ export const Constant = {
         GET_UNIVERSITIES: 'UniversityInformation/Get?Country=',
         CREATE_NEW_UNIVERSITY: 'UniversityInformation',
         SYNC_UNIVERSITIES: 'UniversityInformation/Batch',
-        UPDATE_UNIVERSITY: 'UniversityInformation'
+        UPDATE_UNIVERSITY: 'UniversityInformation',
+        UPDATE_UNIVERSITY_BY_NAME: 'UniversityInformation/EditByName'
     }
 }

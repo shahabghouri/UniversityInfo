@@ -22,7 +22,7 @@ export class UniversityInfoService {
   syncUniversities(data: any[]): Observable<boolean> {
     return this.http.post<boolean>(Constant.API_END_POINT + Constant.METHODS.SYNC_UNIVERSITIES, data);
   }
-  updateCategory(obj: UniversityInfo): Observable<UniversityInfo> {
-    return this.http.put<UniversityInfo>(Constant.API_END_POINT + Constant.METHODS.UPDATE_UNIVERSITY, obj);
+  updateUniversity(obj: any): Observable<any> {
+    return this.http.put<any>(Constant.API_END_POINT + Constant.METHODS.UPDATE_UNIVERSITY_BY_NAME, obj);
   }
 }

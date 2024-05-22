@@ -5,7 +5,8 @@
       <div class="input-group">
         <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search Country"
           aria-label="Search Country">
-        <button class="btn btn-outline-secondary" [disabled]="loading" (click)="fetchUniversities()" type="button">Search</button>
+        <button class="btn btn-outline-secondary" [disabled]="loading" (click)="fetchUniversities()"
+          type="button">Search</button>
       </div>
     </div>
   </div>
@@ -13,18 +14,21 @@
     <div class="d-flex">
       <h1>Country Name: {{ country }}</h1>
       <div>
-        <button (click)="syncUniversities()" class="btn btn-primary btn-sm mt-3 ms-4" [disabled]="syncing || loading" type="button">{{ syncBtnText }}</button>
+        <button (click)="syncUniversities()" class="btn btn-primary btn-sm mt-3 ms-4" [disabled]="syncing || loading"
+          type="button">{{ syncBtnText }}</button>
       </div>
     </div>
-    <h2>List of Universities in {{ country }} <span *ngIf="universities && universities.length !=0">({{universities.length}})</span></h2>
+    <h2>List of Universities in {{ country }} <span
+        *ngIf="universities && universities.length !=0">({{universities.length}})</span></h2>
     <div *ngIf="loading">Loading...</div>
     <div *ngIf="error">{{ error }}</div>
   </div>
   <div class="accordion" *ngIf="universities && universities.length !=0">
     <div class="accordion-item" *ngFor="let university of universities;let i = index">
       <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" attr.data-bs-target="#collapse{{i}}" aria-expanded="true" aria-controls="collapseOne">
-          <a  (click)="openUniversityDetails(university)">{{ university.name }}</a>
+        <a (click)="openUniversityDetails(university)">{{ university.name }}</a>
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          attr.data-bs-target="#collapse{{i}}" aria-expanded="true" aria-controls="collapseOne">
         </button>
       </h2>
       <div id="collapse{{i}}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -34,21 +38,39 @@
           <p>Web Sites: <a *ngFor="let web of university.web_pages" [href]="web" target="_blank">{{ web }}</a></p>
           <p>State / Province: {{ university["state-province"] }}</p>
           <p>Country: {{ university.country }}</p>
+          <button type="button" class="btn btn-primary" (click)="editUniversity(content,university)">Edit</button>
         </div>
       </div>
     </div>
   </div>
-  
-  <section *ngIf="universities && universities.length !=0">
-    <article *ngFor="let university of universities">
-      <details>
-        <summary>{{ university.name }}</summary>
-        <p>Domains: {{ university.domains.join(', ') }}</p>
-        <p>Country Code: {{ university.alpha_two_code }}</p>
-        <p>Web Sites: <a *ngFor="let web of university.web_pages" [href]="web" target="_blank">{{ web }}</a></p>
-        <p>State / Province: {{ university.state_province }}</p>
-        <p>Country: {{ university.country }}</p>
-      </details>
-    </article>
-  </section>
-</div>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">University Update</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form [formGroup]="universityForm">
+      <div class="modal-body">
+        <div class="mb-3">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" [disabled]="true" formControlName="name" />
+          </div>
+          <div class="form-group">
+            <label for="alphaTwoCode">Alpha Two Code</label>
+            <input class="form-control" formControlName="alphaTwoCode" />
+          </div>
+          <div class="form-group">
+            <label for="country">Country</label>
+            <input class="form-control" formControlName="country" />
+          </div>
+          <div class="form-group">
+            <label for="stateProvince">State/Province</label>
+            <input class="form-control" formControlName="stateProvince" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+      </div>
+    </form>
+  </ng-template>

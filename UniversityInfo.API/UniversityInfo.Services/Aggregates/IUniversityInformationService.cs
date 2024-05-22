@@ -12,7 +12,8 @@ namespace UniversityInfo.Services.Aggregates
     {
         Task<List<UniversityDTO>> Get(string Country);
         Task<UniversityDTO> Add(UniversityDTO universityDTO);
-        Task<UniversityDTO> Edit(UniversityDTO universityDTO);
+        Task<UniversityDTO> Edit(long id,UniversityDTO universityDTO);
         Task AddBatch(List<BatchUniversityDTO> universityDTO);
+        Task<UniversityDTO> GetByName(string? name);
     }
 }
